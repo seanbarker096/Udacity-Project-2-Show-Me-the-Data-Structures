@@ -121,6 +121,9 @@ class LRU_Cache(object):
 
         ##if doesnt exist, check if cache is at capacity
         if self.size == self.capacity:
+              ##handle edge case where capacity of cache is 0
+              if self.capacity == 0:
+                  return None 
               ##if it is then remove get key of head from LRU_list and remove from cache
               head_key = self.LRU_list.head.value
               self.cache.pop(head_key)
@@ -138,7 +141,7 @@ class LRU_Cache(object):
         ##update cache size
        
         
-
+##TEST CACHE
 our_cache = LRU_Cache(5)
 
 our_cache.set(1, 1);
@@ -148,9 +151,6 @@ our_cache.set(2, 2);
 our_cache.set(3, 3);
 our_cache.set(4, 4);
 test("Should correctly set value into cache",True, our_cache.cache[4].value == 4);
-# ##test value added to cache correctly
-
-# ##test first entry date greater than second
 
 test("Should return correct valuen from cache", True, our_cache.get(1) == 1)      # returns 1
 # print("current tail", our_cache.LRU_list.tail.value)
@@ -168,3 +168,10 @@ our_cache.set(6, 6)
 # print("current head", our_cache.LRU_list.head.value)
 
 test("Should remove Least Used Value from cache correctly",True, our_cache.get(3) == -1)      # returns -1 because the cache reached it's capacity and 3 was the least recently used entry
+
+##TEST EMPTY CACHE
+our_cache2 = LRU_Cache(0)
+our_cache2.set(1, 1) 
+test("Cache with zero capacity should return None when access attempted",True,our_cache2.get(1) == -1) #should return -1 as cache capacity is zero
+
+
