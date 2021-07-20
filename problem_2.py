@@ -161,8 +161,10 @@ test("Should visit the correct number of files/folders",True, len(find_files(".c
 
 #final complete tests
 test("Should return all files which match the suffix", True, len(find_files(".c","./testdir")[1]) == 4)
+print(find_files(".c","./testdir")[1]) ##should return ['./testdir/t1.c', './testdir/subdir5/a.c', './testdir/subdir3/subsubdir1/b.c', './testdir/subdir1/a.c']
 test("Should not return any files if none match", True, len(find_files(".c","./testdir2")[1]) == 0)
 test("Should return all files which match the suffix even if some folernames include the suffix", True, len(find_files(".c","./testdir5")[1]) == 2)
+test("Should return empty array if folder empty", True, len(find_files(".c","./emptydir")[1]) == 0)
 
 
 print(find_files(".c","./testdir")[1])
