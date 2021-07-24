@@ -3,10 +3,7 @@ from datetime import datetime
 from datetime import timezone, datetime
 import json
 
-
-
 class Block:
-
     def __init__(self, timestamp, data, previous_hash):
       self.timestamp = timestamp
       self.data = data
@@ -22,13 +19,6 @@ class Block:
         sha.update(hash_str)
 
         return sha.hexdigest()
-
-
-##linked list
-## - append to tail
-## - reversed linked list as the next block in chain references previous block
-
-##could have dict of all blocks and their hashes. Then block.prev = dict[hash]
 
 
 class BlockChain:
@@ -75,6 +65,7 @@ class BlockChain:
             i+=1
         s = s + "______________Head_________________________\n"
         return s
+
 
 block_chain = BlockChain()
 
