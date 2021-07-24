@@ -43,7 +43,7 @@ class State():
     self.children = []
     self.visited = False
      
-  ##Note: child paths are relative to parent
+  ##child paths are relative to parent
   def set_children(self):
     if os.path.isdir(self.path):
       self.children =  os.listdir(self.path)
@@ -60,7 +60,7 @@ class State():
     return os.path.isfile(self.path)
 
 
-##helper function to format file paths
+##helper function to format file paths correctly
 def get_formatted_path(path):
   ##if folder add / to front of string
   if os.path.isfile(path):
@@ -76,21 +76,6 @@ def contains_suffix(path, suffix):
 ##tree navigation excercise
 def find_files(suffix, path):
 
-    """
-    Find all files beneath path with file name suffix.
-
-    Note that a path may contain further subdirectories
-    and those subdirectories may also contain further subdirectories.
-
-    There are no limit to the depth of the subdirectories can be.
-
-    Args:
-      suffix(str): suffix if the file name to be found
-      path(str): path of the file system
-
-    Returns:
-       a list of paths
-    """
     order_visited = []
     order_visited_with_suffix = []
     root = State(path)
@@ -100,18 +85,15 @@ def find_files(suffix, path):
 
     while node:
       loop_count +=1
-      ##print(f"\n\n Curr loop count {loop_count}.\n current node:{node.path}\n stack:{stack}")
-
       ##only get children, push node to stack etc. if node is yet to be visited
       if not node.visited:
         ##check children
         node.set_children()
-
         ##add to stack
         stack.push(node)
         order_visited.append(node.path)
 
-        ##if current node is a file and it contains suffix add to suffix array
+        ##if current node is a file and it contains suffix, add to suffix array
         if (contains_suffix(node.path, suffix) and node.is_file()):
           order_visited_with_suffix.append(node.path)
 
@@ -138,6 +120,8 @@ def find_files(suffix, path):
   
     return (order_visited, order_visited_with_suffix)
 
+
+############################# TESTS #############################################
 ##test the custom state class    
 testState = State('./testdir2')
 testState.set_children()
@@ -146,7 +130,6 @@ test("get_child_count should return false once all children popped from array", 
 
 ##test get_formatted_path function works
 test("Should leave input unchange if file", True, get_formatted_path("./testdir2/file.txt") == "./testdir2/file.txt")
-test("Should leave input unchange if file", True, get_formatted_path("./ex.py") == "./ex.py")
 test("Should add / to end if directory", True, get_formatted_path("./testdir2") == "./testdir2/")
 
 ##test contains_suffix function works
@@ -157,7 +140,6 @@ test("should return False if suffix not found", True, contains_suffix("myfile", 
 ##test traverses tree correctly
 test("Should visit the correct number of files/folders",True, len(find_files(".c", './testdir2')[0]) == 6)
 test("Should visit the correct number of files/folders",True, len(find_files(".c", './testdir3')[0]) == 1)
-test("Should visit the correct number of files/folders",True, len(find_files(".c", './testdir4')[0]) == 5)
 
 #final complete tests
 test("Should return all files which match the suffix", True, len(find_files(".c","./testdir")[1]) == 4)

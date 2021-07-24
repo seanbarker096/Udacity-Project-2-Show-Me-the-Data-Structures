@@ -51,7 +51,7 @@ def union(llist_1, llist_2):
     while node:
         ##duplicate node in new linked list
         union_node = Node(node.value)
-        ##if isnt already in uniojn nodes then add, otherwise skip to next node
+        ##if isnt already in union nodes then add, otherwise skip to next node
         if union_nodes.get(union_node.value,None):
             node = node.next
             continue

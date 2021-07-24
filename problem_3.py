@@ -59,7 +59,6 @@ class Huffman_Node(Node):
         self.right_child = rchild
         self.value = lchild.value + rchild.value  if (lchild and rchild) else value
     
-    
 
 def get_char_frequencies(data):
     ##returns dictionary of character counts
@@ -83,6 +82,11 @@ def build_huffman_tree(priority_queue):
         ##pop off first 2 elements
         lchild = priority_queue.popleft()
         rchild = priority_queue.popleft()
+
+        if len(priority_queue):
+            next = priority_queue.popleft()
+            priority_queue.appendleft(next)
+        
         
         new_huffman_node = Huffman_Node(lchild =  lchild,rchild = rchild)
         lchild.parent = new_huffman_node
@@ -90,6 +94,8 @@ def build_huffman_tree(priority_queue):
       
         priority_queue.appendleft(new_huffman_node)
         
+        if next.value > new_huffman_node.value:
+            continue
         priority_queue = create_sorted_node_queue(priority_queue)
 
     ##get table of binary codes for each character
@@ -177,9 +183,8 @@ def huffman_decoding(data,tree):
             decoded_string += node.character
             node = root
             continue
+
         if encoded_string[0] == "1":
-            ##if current node has right child then traverse down to it 
-            ##and remove character from encoded string
             if (node.right_child):
                 node = node.right_child
   
@@ -189,7 +194,7 @@ def huffman_decoding(data,tree):
 
     return decoded_string            
 
-####################################################################################################
+############################################ TESTS ###############################################
 ##tests
 
 # ##test get_char_frequency
