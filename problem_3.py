@@ -59,15 +59,7 @@ class Huffman_Node(Node):
         self.right_child = rchild
         self.value = lchild.value + rchild.value  if (lchild and rchild) else value
     
- 
-
-class Huffman_Tree():
-    def __init__(self, root=None):
-        self.root = root
-
-    def build_tree(self, priority_queue):
-        build_huffman_tree(priority_queue)
-
+    
 
 def get_char_frequencies(data):
     ##returns dictionary of character counts
@@ -81,7 +73,6 @@ def get_char_frequencies(data):
     return char_counts
 
 
-##
 def create_sorted_node_queue(node_list):
     return deque(sorted(node_list, key = lambda node : node.value))
 
@@ -103,7 +94,6 @@ def build_huffman_tree(priority_queue):
 
     ##get table of binary codes for each character
     return priority_queue
-
 
 
 def traverse_huffman_tree(root):
