@@ -14,7 +14,7 @@ class Block:
     def calc_hash(self):
         sha = hashlib.sha256()
 
-        hash_str = json.dumps(self.data).encode('utf-8')
+        hash_str = (json.dumps(self.data) + f"{self.timestamp}").encode('utf-8')
 
         sha.update(hash_str)
 
@@ -46,7 +46,7 @@ class BlockChain:
             ##new_block.previous_hash = self.__get_block(self.tail.hash).hash
             self.tail = new_block
         else:
-            self.tail = self.__create_block(new_block_data, None)
+            self.tail = self.__create_block(new_block_data, 0)
 
         ##add new block to hash_map
         self.block_hash_map[self.tail.hash] = self.tail
