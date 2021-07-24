@@ -76,3 +76,11 @@ block_chain.append({ "username": "User 454", "total_funds_transferred": "$340", 
 block_chain.append({ "username": "User 1", "total_funds_transferred": "$207", "item_id": 5, "transaction_id": "4"})
 
 print(repr(block_chain))
+
+##if duplicate data entered one after the other, the hashes should still be unique
+block_chain = BlockChain()
+
+block_data = { "username": "User 1", "total_funds_transferred": "$100", "item_id": 5, "transaction_id": "1"}
+block_chain.append(block_data)
+block_chain.append(block_data)
+print(repr(block_chain))
